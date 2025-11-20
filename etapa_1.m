@@ -5,10 +5,7 @@
 % 2© Converte o modelo para Espaco de Estados e analisa o comportamento
 %    das variaveis de estado internas©
 %
-% Autor: Gemini 2©5 Pro
-% Data:  30 de Setembro de 2025
-% Correcao: Substituida a funcao 'sgtitle' por um metodo compativel com Octave©
-
+%
 % ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 % ¬¬¬ CONFIGURACAO INICIAL E DEFINICAO DO SISTEMA ¬¬¬
 % ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬

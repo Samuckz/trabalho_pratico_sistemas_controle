@@ -15,7 +15,7 @@ pkg load control;
 G = tf¥[1]«[1 3 1]¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-%% PASSO 1 ¬ Definir polos dominantes desejados ¥zeta e wn¤
+%% PASSO 1 ¬ Polos dominantes desejados ¥zeta e wn¤
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 
 zeta = 0©45;
@@ -27,48 +27,47 @@ wd = wn*sqrt¥1 ¬ zeta^2¤;
 p1 = ¬sigma + j*wd;
 p2 = ¬sigma ¬ j*wd;
 
-printf¥"Passo 1: Polos dominantes desejados:\n"¤;
+printf¥"Passo 1: Polos desejados:\n"¤;
 printf¥"p1 = %©4f + j%©4f\n"« real¥p1¤« imag¥p1¤¤;
 printf¥"p2 = %©4f ¬ j%©4f\n\n"« real¥p2¤« imag¥p2¤¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-%% PASSO 2 ¬ Calcular K necessario sem compensacao
+%% PASSO 2 ¬ Ganho necessario sem compensacao
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 
 [num«den] = tfdata¥G«"vector"¤;
 K_req = abs¥ polyval¥den«p1¤ / polyval¥num«p1¤ ¤;
 
-printf¥"Passo 2: Ganho necessario para colocar polo em p1 sem compensador:\n"¤;
-printf¥"K ¥nao compensado¤ = %©4f\n\n"« K_req¤;
+printf¥"Passo 2: Ganho necessario sem compensacao:\n"¤;
+printf¥"K_req = %©4f\n\n"« K_req¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-%% PASSO 3 ¬ Calcular Kp especificado
+%% PASSO 3 ¬ Definicao de Kp desejado
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 
 Kp_desejado = 30;
-printf¥"Passo 3: Constante de erro estatico desejada ¥Kp¤:\n"¤;
-printf¥"Kp = %d\n\n"« Kp_desejado¤;
+
+printf¥"Passo 3: Kp desejado = %d\n\n"« Kp_desejado¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-%% PASSO 4 ¬ Aumento necessario na constante de erro ¥beta¤
+%% PASSO 4 ¬ Calcular beta
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 
-Kp_original = 1/1;  % G¥0¤ = 1
 beta = Kp_desejado / K_req;
 
-printf¥"Passo 4: Fator beta necessario para erro estatico:\n"¤;
+printf¥"Passo 4: Fator beta:\n"¤;
 printf¥"beta = %©4f\n\n"« beta¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-%% PASSO 5 ¬ Determinar zero e polo do compensador
+%% PASSO 5 ¬ Zero e polo do compensador lag
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 
-z = 0©1;      % zero
-p = z / beta; % polo
+z = 0©1;
+p = z / beta;
 
 printf¥"Passo 5: Zero e polo do compensador:\n"¤;
-printf¥"Zero ¥z¤ = %©4f\n"« z¤;
-printf¥"Polo ¥p¤ = %©4f\n\n"« p¤;
+printf¥"Zero z = %©4f\n"« z¤;
+printf¥"Polo p = %©4f\n\n"« p¤;
 
 Gc = tf¥[1 z]«[1 p]¤;
 
@@ -78,13 +77,13 @@ Gc = tf¥[1 z]«[1 p]¤;
 
 GcG = Gc * G;
 
-printf¥"Passo 6: Lugar das raizes sera plotado na figura©\n\n"¤;
+printf¥"Passo 6: Plotando lugar das raizes©\n\n"¤;
 
 figure¥1¤;
 rlocus¥G¤;
 hold on;
 rlocus¥GcG¤;
-title¥"Lugar das Raizes: Sistema Original e Compensado"¤;
+title¥"Lugar das Raizes: Original e Compensado"¤;
 legend¥"Original"«"Compensado"¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
@@ -95,21 +94,20 @@ legend¥"Original"«"Compensado"¤;
 
 Kc = abs¥ polyval¥denc«p1¤ / polyval¥numc«p1¤ ¤;
 
-printf¥"Passo 7: Ajuste final do ganho Kc:\n"¤;
+printf¥"Passo 7: Ganho final Kc:\n"¤;
 printf¥"Kc = %©4f\n\n"« Kc¤;
 
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
-%% Respostas ao degrau: antes e depois
+%% Resposta ao degrau
 %% ¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬¬
 
 T_original = feedback¥K_req*G«1¤;
-T_compensado = feedback¥Kc*GcG«1¤;
+T_comp = feedback¥Kc*GcG«1¤;
 
 figure¥2¤;
-step¥T_original« T_compensado¤;
+step¥T_original« T_comp¤;
 title¥"Resposta ao Degrau: Original vs Compensado"¤;
 legend¥"Original"«"Compensado"¤;
 
-printf¥"Fim do processo©\n"¤;
-printf¥"As figuras 1 e 2 mostram o lugar das raizes e resposta ao degrau©\n\n"¤;
+printf¥"Fim do processo©\n\n"¤;
 
